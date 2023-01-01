@@ -71,26 +71,26 @@ bool SDP6xClass::readSensor(uint8_t command, uint16_t* res)
 	uint8_t checksum;
 	unsigned long startTime;
 	
-    Wire.beginTransmission(eSDP6xAddress);  //begin
-    Wire.write(command);          //send the pointer location
+    _i2cPort -> beginTransmission(eSDP6xAddress);  //begin
+    _i2cPort -> write(command);          //send the pointer location
     delay(100);
-    Wire.endTransmission();                 //end
+    _i2cPort -> endTransmission();                 //end
 
-    Wire.requestFrom(eSDP6xAddress, 3);
+    _i2cPort -> requestFrom(eSDP6xAddress, 3);
 	
 	startTime = millis();
-    while(Wire.available() < 3) {
+    while(_i2cPort -> available() < 3) {
 		//wait 500ms for results.
 		if (millis() - startTime > 500) {
-			Wire.endTransmission();
+			_i2cPort -> endTransmission();
 			return false;
 		}
     }
 
 	//Store the result
-	data[0] = Wire.read();
-	data[1] = Wire.read();
-	checksum = Wire.read();
+	data[0] = _i2cPort -> read();
+	data[1] = _i2cPort -> read();
+	checksum = _i2cPort -> read();
 	
 	if (CheckCrc(data, 2, checksum) == NO_ERROR) {
 		result = (data[0] << 8);
@@ -121,12 +121,12 @@ void SDP6xClass::writeSensor(uint16_t data){
 	bytes[0] = (data & 0xFF00) >> 8;
 	bytes[1] = data & 0x00FF;
 	
-    Wire.beginTransmission(eSDP6xAddress);  //begin
-    Wire.write(eWriteUserReg);          //send the pointer location
-    Wire.write(bytes[0]);          //send the pointer location
-    Wire.write(bytes[1]);          //send the pointer location
+    _i2cPort -> beginTransmission(eSDP6xAddress);  //begin
+    _i2cPort -> write(eWriteUserReg);          //send the pointer location
+    _i2cPort -> write(bytes[0]);          //send the pointer location
+    _i2cPort -> write(bytes[1]);          //send the pointer location
     delay(100);
-    Wire.endTransmission();                 //end
+    _i2cPort -> endTransmission();                 //end
 }
 
 //============================================================

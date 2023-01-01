@@ -66,14 +66,20 @@ class SDP6xClass
   private:
     bool readSensor(uint8_t command, uint16_t* res);
     PRES_SENSOR_ERROR CheckCrc(uint8_t data[], uint8_t nbrOfBytes, uint8_t checksum);
-	void writeSensor(uint16_t data);
+    void writeSensor(uint16_t data);
+    TwoWire *_i2cPort;
   
   public:
+    // construct sensor with desired I2C address
+    SDP6xClass(TwoWire &wirePort)
+    {
+      this->_i2cPort = &wirePort;
+    }
     float GetPressureDiff(void);
-	void SetSensorResolution(etSensorResolutions resolution);
+    void SetSensorResolution(etSensorResolutions resolution);
 };
 
-extern SDP6xClass SDP6x;
+//extern SDP6xClass SDP6x;
 
 #endif
 
