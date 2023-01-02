@@ -70,10 +70,12 @@ class SDP6xClass
     TwoWire *_i2cPort;
   
   public:
-    // construct sensor with desired I2C address
-    SDP6xClass(TwoWire &wirePort)
+    float scaleFactor;
+    // construct sensor with desired I2C address and scale factor
+    SDP6xClass(TwoWire &wirePort, float sf)
     {
       this->_i2cPort = &wirePort;
+      this->scaleFactor = sf;
     }
     float GetPressureDiff(void);
     void SetSensorResolution(etSensorResolutions resolution);

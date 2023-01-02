@@ -33,7 +33,7 @@
 #include "Arduino.h"
 #include "SDP6x.h"
 
-#define SCALEFACTOR 240.0
+//#define SCALEFACTOR 240.0
 // NOTE you will need to change the SCALEFACTOR to the appropriate value for your sensor
 //  Don't forget the .0 at the end, it makes sure Arduino does not round the number
 // SENSOR       | SDP6xx-500Pa and SDP5xx  |  SDP6x0-125Pa  |  SDP6x0-25Pa  |
@@ -53,7 +53,7 @@ float SDP6xClass::GetPressureDiff(void)
 {
   int16_t res;
   if (readSensor(ePresHoldCmd, (uint16_t*)&res)) {
-	return ((float)(res)/SCALEFACTOR);
+	return ((float)(res)/scaleFactor);
   } else {
 	  return -10000000;
   }
