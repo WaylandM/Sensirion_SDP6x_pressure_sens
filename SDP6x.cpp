@@ -154,6 +154,6 @@ PRES_SENSOR_ERROR SDP6xClass::CheckCrc(uint8_t data[], uint8_t nbrOfBytes, uint8
 	else return NO_ERROR;
 } 
 
-SDP6xClass SDP6x;
+//SDP6xClass SDP6x;
 
 
